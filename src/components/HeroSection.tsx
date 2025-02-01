@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 
 const HeroSection: React.FC = () => {
@@ -28,7 +28,7 @@ const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="w-full pt-36 md:pt-48 pb-10">
+    <section className="w-full pt-36 pb-20">
       <div className="space-y-6 text-center">
         <div className="space-y-6 mx-auto">
           <h1 className="text-5xl font-bold md:text-6xl lg:text-7xl xl:text-8xl gradient-title animate-gradient">
@@ -47,7 +47,7 @@ const HeroSection: React.FC = () => {
               Get Started
             </Button>
           </Link>
-          <Link href="https://www.youtube.com/roadsidecoder">
+          <Link href="/">
             <Button size="lg" variant="outline" className="px-8">
               Watch Demo
             </Button>
