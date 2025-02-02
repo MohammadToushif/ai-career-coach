@@ -16,7 +16,7 @@ import { testimonial } from "@/data/testimonial";
 import { faqs } from "@/data/faqs";
 import { workFlow } from "@/data/work-flow";
 
-export default function page() {
+export default function HomePage() {
   return (
     <>
       <div className="grid-background"></div>
