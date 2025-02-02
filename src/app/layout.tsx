@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark, shadesOfPurple } from "@clerk/themes";
 import { Header } from "@/components";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-            {children}
+            <main className="min-h-screen">{children}</main>
+            <Toaster richColors />
           </ThemeProvider>
         </body>
       </html>

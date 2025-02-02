@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { generateAiInsights } from "./dashboardActions";
 
 // Define the expected structure of user update data
 interface UpdateUserData {
@@ -35,19 +36,15 @@ export async function updateUser(data: UpdateUserData) {
           },
         });
 
-        // If industry doesn't exist, create it with default values
+        // If industry doesn't exist, create it with AI
         if (!industryInsight) {
-          industryInsight = await tx.industryInsight.create({
+          const insights = await generateAiInsights(data.industry);
+
+          industryInsight = await db.industryInsight.create({
             data: {
-              industry: data.industry,
-              salaryRanges: [],
-              growthRate: 0,
-              demandLevel: "Medium",
-              topSkills: [],
-              marketOutlook: "Neutral",
-              keyTrends: [],
-              recommendedSkills: [],
-              nextUpdate: new Date(Date.now() + 7 * 24 * 3600 * 1000), // 1 week from now
+              industry: String(data.industry),
+              ...insights,
+              nextUpdate: new Date(Date.now() + 7 * 24 * 3600 * 1000),
             },
           });
         }
@@ -72,7 +69,7 @@ export async function updateUser(data: UpdateUserData) {
       }
     );
 
-    return result.updatedUser;
+    return { succcess: true, ...result };
   } catch (error) {
     console.error("Error updating user profile:", error);
     throw new Error("Failed to update user profile");
@@ -91,7 +88,7 @@ export async function getUserOnboardingStatus() {
         clerkUserId: userId,
       },
       select: {
-        industry: true, // Only fetch `industry` field
+        industry: true, // Only fetch industry field
       },
     });
 
